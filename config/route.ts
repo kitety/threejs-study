@@ -3,13 +3,14 @@ import { IBestAFSRoute } from '@umijs/plugin-layout';
 const routes: IBestAFSRoute[] = [
   {
     path: '/',
-    component: '@/pages/index',
-    name:'首页',
+    component: '@/pages/01',
+    name:'01BoxGeometry',
   },
   {
-    path: '/user',
-    component: '@/pages/user',
-    name:'user',
+    path: '/02',
+    component: '@/pages/02',
+    name:'02size',
   },
+
 ];
 export default routes;
