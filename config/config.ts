@@ -14,5 +14,5 @@ export default defineConfig({
   routes,
   fastRefresh: {},
   publicPath: 'https://kitety.github.io/threejs-study/',
-  base: 'https://kitety.github.io/threejs-study/',
+  base: '/threejs-study/',
 });
