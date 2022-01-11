@@ -13,5 +13,5 @@ export default defineConfig({
   mfsu: {},
   routes,
   fastRefresh: {},
-  outputPath: './',
+  publicPath: 'https://kitety.github.io/threejs-study/',
 });
