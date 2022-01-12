@@ -21,5 +21,15 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/04',
     name: '04Scene',
   },
+  {
+    path: '/05',
+    component: '@/pages/05',
+    name: '05Texture',
+  },
+  {
+    path: '/06',
+    component: '@/pages/06',
+    name: '06Texture',
+  },
 ];
 export default routes;

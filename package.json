@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "start": "umi dev UMI_ENV=dev",
-    "build": "umi build",
+    "start": "cross-env UMI_ENV=dev umi dev  ",
+    "build": "cross-env umi build ",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
@@ -22,6 +22,7 @@
   "dependencies": {
     "@ant-design/pro-layout": "^6.32.3",
     "ahooks": "^3.1.5",
+    "cross-env": "^7.0.3",
     "react": "^17.0.2",
     "react-dom": "17.x",
     "stats.js": "^0.17.0",
