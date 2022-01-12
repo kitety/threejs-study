@@ -12,4 +12,5 @@ export default defineConfig({
   mfsu: {},
   routes,
   fastRefresh: {},
+  webpack5: {},
 });

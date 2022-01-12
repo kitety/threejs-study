@@ -31,7 +31,6 @@ const Primitives = () => {
   const createMaterial = () => {
     const material = new Three.MeshPhongMaterial({ side: Three.DoubleSide });
     const hue = (Math.random() * 100) / 100; //随机获得一个色相
-    console.log('hue: ', hue);
     // 饱和度
     const saturation = (Math.random() * 100) / 100;
     // 亮度
