@@ -39,6 +39,23 @@ const Primitives = () => {
     material.color.setHSL(hue, saturation, luminance);
     return material;
   };
+  const createText = () => {
+    const loader = new FontLoader();
+    const url =
+      'https://threejsfundamentals.org/threejs/resources/threejs/fonts/helvetiker_regular.typeface.json';
+
+    const onLoadHandle = (responseFont: Font) => {
+      console.log(responseFont);
+    };
+    const onProgressHandle = (event: ProgressEvent<EventTarget>) => {
+      console.log(event);
+    };
+    const onErrorHandle = (error: ErrorEvent) => {
+      console.log(error);
+    };
+
+    loader.load(url, onLoadHandle, onProgressHandle, onErrorHandle);
+  };
 
   const createInit = useCallback(() => {
     if (canvasRef.current) {
