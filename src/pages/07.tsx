@@ -25,8 +25,13 @@ import {
 import './07.less';
 
 import { createScene, MaterialType } from './component/create-scene';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper';
+// import * as Controls from 'three/examples/jsm/controls/OrbitControls';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper';
+
+// const { OrbitControls } = Controls;
+import { OrbitControls } from 'three-orbitcontrols-ts';
+console.log('OrbitControls: ', OrbitControls);
 
 enum LightType {
   AmbientLight = 'AmbientLight',
@@ -159,8 +164,8 @@ const Index = () => {
           rectAreaLight.rotation.x = MathUtils.degToRad(-90);
           newScene.add(rectAreaLight);
 
-          const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
-          newScene.add(rectAreaLightHelper);
+          // const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
+          // newScene.add(rectAreaLightHelper);
           break;
         case LightType.SpotLight:
           const spotLight = new SpotLight(0xffffff, 1);
