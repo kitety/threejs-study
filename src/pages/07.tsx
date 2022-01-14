@@ -2,16 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import {
   AmbientLight,
   AmbientLightProbe,
-  BoxBufferGeometry,
-  Color,
   DirectionalLight,
   DirectionalLightHelper,
   HemisphereLight,
   HemisphereLightHelper,
   HemisphereLightProbe,
   MathUtils,
-  Mesh,
-  MeshBasicMaterial,
   PerspectiveCamera,
   PointLight,
   PointLightHelper,
@@ -19,19 +15,13 @@ import {
   Scene,
   SpotLight,
   SpotLightHelper,
-  TextureLoader,
   WebGLRenderer,
 } from 'three';
 import './07.less';
 
 import { createScene, MaterialType } from './component/create-scene';
-// import * as Controls from 'three/examples/jsm/controls/OrbitControls';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-// import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper';
-
-// const { OrbitControls } = Controls;
-import { OrbitControls } from 'three-orbitcontrols-ts';
-console.log('OrbitControls: ', OrbitControls);
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper';
 
 enum LightType {
   AmbientLight = 'AmbientLight',
@@ -78,8 +68,9 @@ const Index = () => {
         if (sceneRef.current) {
           renderer.render(sceneRef.current, camera);
         }
+        requestAnimationFrame(render);
       };
-      window.requestAnimationFrame(render);
+      requestAnimationFrame(render);
 
       const handleResize = () => {
         const canvas = canvasRef.current;
@@ -157,15 +148,15 @@ const Index = () => {
           newScene.add(pointLightHelper);
           break;
         case LightType.RectAreaLight:
-          //RectAreaLightUniformsLib.init() //实际测试时发现即使不添加这行代码，场景似乎也依然正常渲染，没有看出差异
+          // RectAreaLightUniformsLib.init() //实际测试时发现即使不添加这行代码，场景似乎也依然正常渲染，没有看出差异
 
           const rectAreaLight = new RectAreaLight(0xffffff, 5, 12, 4);
           rectAreaLight.position.set(0, 10, 0);
           rectAreaLight.rotation.x = MathUtils.degToRad(-90);
           newScene.add(rectAreaLight);
 
-          // const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
-          // newScene.add(rectAreaLightHelper);
+          const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
+          newScene.add(rectAreaLightHelper);
           break;
         case LightType.SpotLight:
           const spotLight = new SpotLight(0xffffff, 1);
@@ -178,14 +169,13 @@ const Index = () => {
           newScene.add(spotLightHelper);
           break;
         default:
-          console.log('???');
           break;
       }
     }
   }, [type]);
 
   return (
-    <div className="full-screen2">
+    <div className="full-screen">
       <div className="buttons">
         {buttonLabels.map((label, index) => {
           return (
@@ -201,7 +191,7 @@ const Index = () => {
           );
         })}
       </div>
-      <canvas ref={canvasRef} />
+      <canvas ref={canvasRef} className="full-screen" />
     </div>
   );
 };
