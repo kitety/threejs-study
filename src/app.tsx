@@ -16,8 +16,6 @@ export const layout = (props): BasicLayoutProps => {
     contentStyle: {
       height: 'calc(100vh - 48px)',
     },
-    headerRender: () => <div className={styles.link}>
-
-    </div>,
+    headerRender: () => <div className={styles.link}></div>,
   };
 };

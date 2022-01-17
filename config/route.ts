@@ -81,5 +81,10 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/16',
     name: '16按需渲染',
   },
+  {
+    path: '/17',
+    component: '@/pages/17',
+    name: '17canvas',
+  },
 ];
 export default routes;
