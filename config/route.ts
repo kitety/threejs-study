@@ -91,5 +91,15 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/18',
     name: '18canvas2',
   },
+  {
+    path: '/19',
+    component: '@/pages/19',
+    name: '19Canvas Earth',
+  },
+  {
+    path: '/20',
+    component: '@/pages/20',
+    name: '20 3D Earth',
+  },
 ];
 export default routes;
