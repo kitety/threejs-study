@@ -2,6 +2,7 @@ import { loadDataFile } from '@/utils/loadDataFile';
 import { useReactive, useRequest } from 'ahooks';
 import { useEffect, useRef } from 'react';
 import * as Three from 'three';
+import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const url =
@@ -94,8 +95,8 @@ const PreserveDrawingBuffer = () => {
   };
   const addBoxes = (ascData: ASCData, scene: Three.Scene) => {
     console.log('scene: ', scene);
-    const geometry = new Three.BoxBufferGeometry(1, 1, 1);
-    geometry.applyMatrix4(new Three.Matrix4().makeTranslation(0, 0, 0.5));
+    // const geometry = new Three.BoxBufferGeometry(1, 1, 1);
+    // geometry.applyMatrix4(new Three.Matrix4().makeTranslation(0, 0, 0.5));
 
     const lonHelper = new Three.Object3D();
     scene.add(lonHelper);
@@ -107,36 +108,79 @@ const PreserveDrawingBuffer = () => {
     positionHelper.position.set(0, 0, 1);
     latHelper.add(positionHelper);
 
+    const originHelper = new Three.Object3D();
+    originHelper.position.set(0, 0, 0.5);
+    positionHelper.add(positionHelper);
+
     const range = ascData.max - ascData.min;
 
     const lonFudge = Math.PI / 2;
     const latFudge = Math.PI * -0.135;
+    const geometries: Three.BoxBufferGeometry[] = [];
+    const color = new Three.Color();
     ascData.data.forEach((row, latIndex) => {
       row.forEach((value, lonIndex) => {
         if (value === undefined) {
           return;
         }
         const amount = (value - ascData.min) / range;
-        const material = new Three.MeshBasicMaterial();
-        const hue = Three.MathUtils.lerp(0.7, 0.3, amount);
+        // const material = new Three.MeshBasicMaterial();
+        // const hue = Three.MathUtils.lerp(0.7, 0.3, amount);
 
-        const saturation = 1;
-        const lightness = Three.MathUtils.lerp(0.1, 1, amount);
-        material.color.setHSL(hue, saturation, lightness);
-        const mesh = new Three.Mesh(geometry, material);
-        console.log('mesh: ', mesh);
+        // const saturation = 1;
+        // const lightness = Three.MathUtils.lerp(0.1, 1, amount);
+        // material.color.setHSL(hue, saturation, lightness);
+        // const mesh = new Three.Mesh(geometry, material);
+        // console.log('mesh: ', mesh);
 
-        scene.add(mesh);
+        // scene.add(mesh);
+
+        const geometry = new Three.BoxBufferGeometry(1, 1, 1);
         lonHelper.rotation.y =
           Three.MathUtils.degToRad(lonIndex + ascData.xllcorner) + lonFudge;
         latHelper.rotation.x =
           Three.MathUtils.degToRad(latIndex + ascData.yllcorner) + latFudge;
 
-        positionHelper.updateWorldMatrix(true, false);
-        mesh.applyMatrix4(positionHelper.matrixWorld);
-        mesh.scale.set(0.005, 0.005, Three.MathUtils.lerp(0.001, 0.5, amount));
+        positionHelper.scale.set(
+          0.005,
+          0.005,
+          Three.MathUtils.lerp(0.01, 0.5, amount),
+        );
+        originHelper.updateWorldMatrix(true, false);
+        geometry.applyMatrix4(originHelper.matrixWorld);
+
+        const hue = Three.MathUtils.lerp(0.7, 0.3, amount);
+        const saturation = 1;
+        const lightness = Three.MathUtils.lerp(0.1, 1, amount);
+        color.setHSL(hue, saturation, lightness);
+
+        const rgb = color.toArray().map((i) => 255 * i);
+        const numVerts = geometry.attributes.position.count;
+        const itemSize = 3;
+        const colors = new Uint8Array(numVerts * itemSize);
+
+        //这里有一个稍微奇葩点的写法，就是使用下划线 _ 来起到参数占位的作用
+        colors.forEach((_, index) => {
+          colors[index] = rgb[index % 3];
+        });
+        const normalized = true;
+        const colorAttrib = new Three.BufferAttribute(
+          colors,
+          itemSize,
+          normalized,
+        );
+        geometry.setAttribute('color', colorAttrib);
+
+        geometries.push(geometry);
       });
     });
+    const mergedGeometry = mergeBufferGeometries(geometries);
+    //const material = new Three.MeshBasicMaterial({ color: 'red' })
+    const material = new Three.MeshBasicMaterial({
+      vertexColors: true,
+    });
+    const mesh = new Three.Mesh(mergedGeometry, material);
+    scene.add(mesh);
   };
 
   useEffect(() => {
