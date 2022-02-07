@@ -5,8 +5,9 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { useReactive } from 'ahooks';
 import { Spin } from 'antd';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-const modelSrc = 'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/model.obj';
+const modelSrc = 'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/glb.glb';
 const mtlSrc = 'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/model.mtl';
 const Index = () => {
   const state = useReactive({
@@ -26,18 +27,18 @@ const Index = () => {
       const controls = new OrbitControls(camera, canvasRef.current);
       controls.update();
 
-      const loader = new OBJLoader();
-      const mtlLoader = new MTLLoader();
+      const loader = new GLTFLoader();
+      // const mtlLoader = new MTLLoader();
 
-      mtlLoader.load(mtlSrc, (materialCreator) => {
-        loader.setMaterials(materialCreator);
-        console.log('materialCreator: ', materialCreator);
+      // mtlLoader.load('./model/hello.mtl', (materialCreator) => {
+        // loader.setMaterials(materialCreator);
+        // console.log('materialCreator: ', materialCreator);
 
         loader.load(
           modelSrc,
           (group) => {
             console.log('group: ', group);
-            scene.add(group);
+            scene.add(group.scene);
           },
           (event) => {
             console.log(
@@ -49,7 +50,7 @@ const Index = () => {
             console.log(error.type);
           },
         );
-      });
+      // });
 
       const render = () => {
         renderer.render(scene, camera);
