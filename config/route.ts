@@ -127,5 +127,15 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/25',
     name: '25 scene background',
   },
+  {
+    path: '/26',
+    component: '@/pages/26',
+    name: '26 SkyBox',
+  },
+  {
+    path: '/27',
+    component: '@/pages/27',
+    name: '27 SkyBox',
+  },
 ];
 export default routes;
