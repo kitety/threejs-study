@@ -106,5 +106,11 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/21',
     name: '21 3D Optimization Earth',
   },
+  // 模型的加载
+  {
+    path: '/22',
+    component: '@/pages/22',
+    name: '22 model loader',
+  },
 ];
 export default routes;
