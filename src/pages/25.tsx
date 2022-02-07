@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { useReactive } from 'ahooks';
@@ -7,15 +7,31 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 const modelSrc = 'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/glb.glb';
 const mtlSrc = 'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/model.mtl';
+const skyImg =
+  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/20220207175946.png';
+
 const Index = () => {
   const state = useReactive({
     count: 0,
   });
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const textureRef = useRef<THREE.Texture | null>(null);
+
   useEffect(() => {
     if (canvasRef.current) {
-      const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current });
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvasRef.current,
+        alpha: true,
+      });
       const scene = new THREE.Scene();
+      const textureLoader = new THREE.TextureLoader();
+      textureLoader.load(skyImg, (texture) => {
+        // textureRef.current = texture;
+        // scene.background = texture;
+        handleResize();
+      });
+      scene.background = textureRef.current;
+
       const camera = new THREE.PerspectiveCamera(45, 2, 0.1, 100);
       camera.position.set(10, 0, 10);
 
@@ -56,8 +72,21 @@ const Index = () => {
 
         const width = canvasRef.current.clientWidth;
         const height = canvasRef.current.clientHeight;
+        const canvasAspect = width / height;
+        if (textureRef.current) {
+          const bgTexture = textureRef.current;
+          const imgAspect = bgTexture.image.width / bgTexture.image.height;
 
-        camera.aspect = width / height;
+          const resultAspect = imgAspect / canvasAspect;
+          bgTexture.offset.x =
+            resultAspect > 1 ? (1 - 1 / resultAspect) / 2 : 0;
+          bgTexture.repeat.x = resultAspect > 1 ? 1 / resultAspect : 1;
+
+          bgTexture.offset.y = resultAspect > 1 ? 0 : (1 - resultAspect) / 2;
+          bgTexture.repeat.y = resultAspect > 1 ? 1 : resultAspect;
+        }
+
+        camera.aspect = canvasAspect;
         camera.updateProjectionMatrix();
         renderer.setSize(width, height, false);
       };
@@ -72,7 +101,15 @@ const Index = () => {
   return (
     <>
       <Spin tip={`已经加载：${state.count}%`} spinning={state.count < 100}>
-        <canvas ref={canvasRef} className="full-screen" />
+        <canvas
+          ref={canvasRef}
+          className="full-screen"
+          style={{
+            background:
+              'url(https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/20220207175946.png) no-repeat center center',
+            backgroundSize: 'cover',
+          }}
+        />
       </Spin>
     </>
   );

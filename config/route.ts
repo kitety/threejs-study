@@ -117,5 +117,15 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/23',
     name: '23 gltf loader',
   },
+  {
+    path: '/24',
+    component: '@/pages/24',
+    name: '24 scene background',
+  },
+  {
+    path: '/25',
+    component: '@/pages/25',
+    name: '25 scene background',
+  },
 ];
 export default routes;
