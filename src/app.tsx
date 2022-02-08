@@ -5,7 +5,7 @@ import {
 } from '@ant-design/pro-layout';
 import { RightContent } from '@ant-design/pro-layout/lib/components/TopNavHeader';
 import Footer from '@ant-design/pro-layout/lib/Footer';
-import styles from './app.module.less';
+import './app.module.css';
 import { useMount } from 'ahooks';
 import Stats from 'stats.js';
 
@@ -38,6 +38,6 @@ export const layout = (): BasicLayoutProps => {
     contentStyle: {
       height: 'calc(100vh - 48px)',
     },
-    headerRender: () => <Right2 />,
+    headerContentRender: () => <Right2 />,
   };
 };

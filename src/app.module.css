@@ -4,10 +4,8 @@
   align-items: center;
 }
 
-:global {
   .full-screen {
     display: block;
     width: 100%;
     height: calc(100vh - 48px);
   }
-}
