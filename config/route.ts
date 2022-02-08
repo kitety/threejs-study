@@ -130,12 +130,32 @@ const routes: IBestAFSRoute[] = [
   {
     path: '/26',
     component: '@/pages/26',
-    name: '26 SkyBox',
+    name: '26 SkyBox1',
   },
   {
     path: '/27',
     component: '@/pages/27',
-    name: '27 SkyBox',
+    name: '27 SkyBox2',
+  },
+  {
+    path: '/28',
+    component: '@/pages/28',
+    name: '28 transparent1',
+  },
+  {
+    path: '/29',
+    component: '@/pages/29',
+    name: '29 transparent2',
+  },
+  {
+    path: '/30',
+    component: '@/pages/30',
+    name: '30 transparent3',
+  },
+  {
+    path: '/31',
+    component: '@/pages/31',
+    name: '31 transparent4',
   },
 ];
 export default routes;
