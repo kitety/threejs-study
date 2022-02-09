@@ -157,5 +157,20 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/31',
     name: '31 transparent4',
   },
+  {
+    path: '/32',
+    component: '@/pages/32',
+    name: '32 scene ',
+  },
+  {
+    path: '/33',
+    component: '@/pages/33',
+    name: '33 scene ',
+  },
+  {
+    path: '/34',
+    component: '@/pages/34',
+    name: '34 scene ',
+  },
 ];
 export default routes;
