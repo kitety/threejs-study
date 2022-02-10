@@ -172,5 +172,10 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/34',
     name: '34 scene ',
   },
+  {
+    path: '/35',
+    component: '@/pages/35',
+    name: '35 object-hierarchy ',
+  },
 ];
 export default routes;
