@@ -177,5 +177,10 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/35',
     name: '35 object-hierarchy ',
   },
+  {
+    path: '/36',
+    component: '@/pages/36',
+    name: '36 geometry-to-buffergeometry ',
+  },
 ];
 export default routes;
