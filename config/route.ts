@@ -202,5 +202,25 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/40',
     name: '40 NormalMap',
   },
+  {
+    path: '/41',
+    component: '@/pages/41',
+    name: '41 displacmentmap',
+  },
+  {
+    path: '/42',
+    component: '@/pages/42',
+    name: '42 displacmentmap normalmap',
+  },
+  {
+    path: '/43',
+    component: '@/pages/43',
+    name: '43 texture offset repeat center',
+  },
+  {
+    path: '/44',
+    component: '@/pages/44',
+    name: '44 mipmaps',
+  },
 ];
 export default routes;

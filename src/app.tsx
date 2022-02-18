@@ -38,6 +38,15 @@ export const layout = (): BasicLayoutProps => {
     contentStyle: {
       height: 'calc(100vh - 48px)',
     },
-    headerContentRender: () => <Right2 />,
+    headerContentRender: () => {
+      return (
+        <div>
+          <a href="https://github.com/kitety/threejs-study" target="_blank">
+            Github
+          </a>
+          <Right2 />
+        </div>
+      );
+    },
   };
 };
