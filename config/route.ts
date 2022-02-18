@@ -182,5 +182,25 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/36',
     name: '36 geometry-to-buffergeometry ',
   },
+  {
+    path: '/37',
+    component: '@/pages/37',
+    name: '37 SpecularMap',
+  },
+  {
+    path: '/38',
+    component: '@/pages/38',
+    name: '38 roughness metalness',
+  },
+  {
+    path: '/39',
+    component: '@/pages/39',
+    name: '39 bumpmap',
+  },
+  {
+    path: '/40',
+    component: '@/pages/40',
+    name: '40 NormalMap',
+  },
 ];
 export default routes;

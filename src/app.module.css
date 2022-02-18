@@ -12,3 +12,9 @@
 .my_gui {
   top: 50px;
 }
+.my_gui select option {
+  color: #000;
+}
+.my_gui select {
+  color: #000;
+}
