@@ -222,5 +222,20 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/44',
     name: '44 mipmaps',
   },
+  {
+    path: '/45',
+    component: '@/pages/45',
+    name: '45 custom mipmaps',
+  },
+  {
+    path: '/46',
+    component: '@/pages/46',
+    name: '46 anistropic',
+  },
+  {
+    path: '/47',
+    component: '@/pages/47',
+    name: '47 ambient light',
+  },
 ];
 export default routes;
