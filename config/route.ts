@@ -233,9 +233,29 @@ const routes: IBestAFSRoute[] = [
     name: '46 anistropic',
   },
   {
-    path: '/47',
-    component: '@/pages/47',
-    name: '47 ambient light',
+    path: '/48',
+    component: '@/pages/48',
+    name: '48 directional light',
+  },
+  {
+    path: '/49',
+    component: '@/pages/49',
+    name: '49 hemisphere light',
+  },
+  {
+    path: '/50',
+    component: '@/pages/50',
+    name: '50 point light',
+  },
+  {
+    path: '/51',
+    component: '@/pages/51',
+    name: '51 spot light',
+  },
+  {
+    path: '/52',
+    component: '@/pages/52',
+    name: '52 spot light',
   },
 ];
 export default routes;
