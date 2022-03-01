@@ -255,7 +255,27 @@ const routes: IBestAFSRoute[] = [
   {
     path: '/52',
     component: '@/pages/52',
-    name: '52 spot light',
+    name: '52 spot light shadow',
+  },
+  {
+    path: '/53',
+    component: '@/pages/53',
+    name: '53 directional light shadow',
+  },
+  {
+    path: '/54',
+    component: '@/pages/54',
+    name: '54 TrackballControls ',
+  },
+  {
+    path: '/55',
+    component: '@/pages/55',
+    name: '55 pointerlock-controls',
+  },
+  {
+    path: '/56',
+    component: '@/pages/56',
+    name: '56 drag controls',
   },
 ];
 export default routes;
