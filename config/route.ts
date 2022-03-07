@@ -312,5 +312,10 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/63',
     name: '63 draco loader',
   },
+  {
+    path: '/64',
+    component: '@/pages/64',
+    name: '64 ply loader',
+  },
 ];
 export default routes;
