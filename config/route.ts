@@ -277,5 +277,40 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/56',
     name: '56 drag controls',
   },
+  {
+    path: '/57',
+    component: '@/pages/57',
+    name: '57 transform controls',
+  },
+  {
+    path: '/58',
+    component: '@/pages/58',
+    name: '58 multi controls',
+  },
+  {
+    path: '/59',
+    component: '@/pages/59',
+    name: '59 obj model loader',
+  },
+  {
+    path: '/60',
+    component: '@/pages/60',
+    name: '60 mtl loader',
+  },
+  {
+    path: '/61',
+    component: '@/pages/61',
+    name: '61 gltf loader',
+  },
+  {
+    path: '/62',
+    component: '@/pages/62',
+    name: '62 gltf loader',
+  },
+  {
+    path: '/63',
+    component: '@/pages/63',
+    name: '63 draco loader',
+  },
 ];
 export default routes;

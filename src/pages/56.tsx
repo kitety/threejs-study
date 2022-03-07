@@ -68,6 +68,12 @@ const Index = () => {
       // controls.update();
       render();
       requestAnimationFrame(animate);
+      cubes[0].rotation.x += 0.01;
+      cubes[0].rotation.y += 0.011;
+      cubes[1].rotation.x += 0.012;
+      cubes[1].rotation.y += 0.013;
+      cubes[2].rotation.x += 0.014;
+      cubes[2].rotation.y += 0.015;
     }
     renderRef.current = animate;
 
