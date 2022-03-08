@@ -7,20 +7,15 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader';
-const GLTFLink =
-  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/monkey.gltf';
+import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
+
+const stlSrc =
+  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/example.stl';
 // 压缩过的文件
-const LGBlink =
-  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/monkey_compressed.glb';
 
 // ply 文件
-const plyFile =
-  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/sean4.ply';
 
 const Index = () => {
-  const state = useReactive({
-    lock: true,
-  });
   const renderRef = useRef<Function | null>(null);
   const controlsRef = useRef<TransformControls | null>(null);
 
@@ -41,10 +36,10 @@ const Index = () => {
   useMount(() => {
     const scene = new THREE.Scene();
     scene.add(new THREE.AxesHelper(5));
-    scene.background = new THREE.Color(0xffffff);
+    scene.background = new THREE.Color(0xff0000);
 
-    const light = new THREE.AmbientLight(0x404040);
-    // light.position.set(20, 20, 20);
+    var light = new THREE.DirectionalLight();
+    light.position.set(2.5, 7.5, 15);
     scene.add(light);
 
     const camera = new THREE.PerspectiveCamera(
@@ -54,7 +49,7 @@ const Index = () => {
       100,
     );
 
-    camera.position.set(0, 0, 40);
+    camera.position.set(0, 0, 4);
     const canvas = document.getElementById('canvas')!;
     const renderer = new THREE.WebGLRenderer({ canvas });
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -67,7 +62,7 @@ const Index = () => {
     };
     renderer.setSize(window.innerWidth - 220, window.innerHeight - 50);
 
-    const loader = new PLYLoader();
+    const loader = new STLLoader();
     // const dracoLoader = new DRACOLoader();
     // dracoLoader.setDecoderPath(
     //   'https://cdn.jsdelivr.net/gh/google/draco@master/javascript/',
@@ -101,6 +96,7 @@ const Index = () => {
       img6,
     ]);
     envTexture.mapping = THREE.CubeReflectionMapping;
+    console.log('envTexture: ', envTexture);
     const material = new THREE.MeshPhysicalMaterial({
       color: 0xb2ffc8,
       envMap: envTexture,
@@ -113,12 +109,11 @@ const Index = () => {
       clearcoatRoughness: 0.25,
     });
     loader.load(
-      plyFile,
+      stlSrc,
       (geometry) => {
         geometry.computeVertexNormals();
         console.log('geometry: ', geometry);
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.rotateX(-Math.PI / 2);
         scene.add(mesh);
         // 轨道控制器
         const controls = new TransformControls(camera, renderer.domElement);

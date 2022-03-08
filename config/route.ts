@@ -317,5 +317,25 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/64',
     name: '64 ply loader',
   },
+  {
+    path: '/65',
+    component: '@/pages/65',
+    name: '65 stl loader',
+  },
+  {
+    path: '/66',
+    component: '@/pages/66',
+    name: '66 fbx loader',
+  },
+  {
+    path: '/67',
+    component: '@/pages/67',
+    name: '67 gltf animations',
+  },
+  {
+    path: '/68',
+    component: '@/pages/68',
+    name: '68 gltf-animations-drag',
+  },
 ];
 export default routes;

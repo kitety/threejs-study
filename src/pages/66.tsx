@@ -1,26 +1,16 @@
-import { useEventListener, useMount, useReactive } from 'ahooks';
+import { useEventListener, useMount } from 'ahooks';
 import './35.less';
 import * as THREE from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import { useRef } from 'react';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader';
-const GLTFLink =
-  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/monkey.gltf';
-// 压缩过的文件
-const LGBlink =
-  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/monkey_compressed.glb';
 
-// ply 文件
-const plyFile =
-  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/sean4.ply';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+
+const fbxSrc =
+  'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/xbot.fbx';
 
 const Index = () => {
-  const state = useReactive({
-    lock: true,
-  });
   const renderRef = useRef<Function | null>(null);
   const controlsRef = useRef<TransformControls | null>(null);
 
@@ -41,11 +31,13 @@ const Index = () => {
   useMount(() => {
     const scene = new THREE.Scene();
     scene.add(new THREE.AxesHelper(5));
-    scene.background = new THREE.Color(0xffffff);
+    // scene.background = new THREE.Color(0xff0000);
 
-    const light = new THREE.AmbientLight(0x404040);
-    // light.position.set(20, 20, 20);
+    const light = new THREE.PointLight();
+    light.position.set(0.8, 1.4, 1.0);
     scene.add(light);
+    const ambientLight = new THREE.AmbientLight();
+    scene.add(ambientLight);
 
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -54,7 +46,7 @@ const Index = () => {
       100,
     );
 
-    camera.position.set(0, 0, 40);
+    camera.position.set(0, 0, 4);
     const canvas = document.getElementById('canvas')!;
     const renderer = new THREE.WebGLRenderer({ canvas });
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -67,62 +59,28 @@ const Index = () => {
     };
     renderer.setSize(window.innerWidth - 220, window.innerHeight - 50);
 
-    const loader = new PLYLoader();
-    // const dracoLoader = new DRACOLoader();
-    // dracoLoader.setDecoderPath(
-    //   'https://cdn.jsdelivr.net/gh/google/draco@master/javascript/',
-    // );
-    // dracoLoader.setDecoderConfig({ type: 'js' });
-    // loader.setDRACOLoader(dracoLoader);
-    // 1
-    const img1 =
-      'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/20220307200636.png';
-    // 2
-    const img2 =
-      'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/20220307200649.png';
-    // 3
-    const img3 =
-      'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/20220307200704.png';
-    // 4
-    const img4 =
-      'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/20220307200715.png';
-    // 5
-    const img5 =
-      'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/20220307200726.png';
-    // 6
-    const img6 =
-      'https://cdn.jsdelivr.net/gh/kitety/blog_img@master/img/20220307200739.png';
-    const envTexture = new THREE.CubeTextureLoader().load([
-      img1,
-      img2,
-      img3,
-      img4,
-      img5,
-      img6,
-    ]);
-    envTexture.mapping = THREE.CubeReflectionMapping;
-    const material = new THREE.MeshPhysicalMaterial({
-      color: 0xb2ffc8,
-      envMap: envTexture,
-      metalness: 0,
-      roughness: 0,
-      transparent: true,
-      transmission: 1.0,
-      side: THREE.DoubleSide,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.25,
-    });
+    const loader = new FBXLoader();
+
+    const material = new THREE.MeshNormalMaterial();
     loader.load(
-      plyFile,
-      (geometry) => {
-        geometry.computeVertexNormals();
-        console.log('geometry: ', geometry);
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.rotateX(-Math.PI / 2);
-        scene.add(mesh);
+      fbxSrc,
+      (object) => {
+        console.log('object: ', object);
+        object.traverse(function (child) {
+          if ((child as THREE.Mesh).isMesh) {
+            (child as THREE.Mesh).material = material;
+            if ((child as THREE.Mesh).material as THREE.Material) {
+              ((child as THREE.Mesh).material as THREE.Material).transparent =
+                false;
+            }
+          }
+        });
+        object.scale.set(0.01, 0.01, 0.01);
+        scene.add(object);
+
         // 轨道控制器
         const controls = new TransformControls(camera, renderer.domElement);
-        controls.attach(mesh);
+        controls.attach(object);
         controlsRef.current = controls;
         scene.add(controls);
         controls.addEventListener('dragging-changed', function (event) {
