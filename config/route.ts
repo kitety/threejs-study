@@ -337,5 +337,10 @@ const routes: IBestAFSRoute[] = [
     component: '@/pages/68',
     name: '68 gltf-animations-drag',
   },
+  {
+    path: '/69',
+    component: '@/pages/69',
+    name: '69 reflector',
+  },
 ];
 export default routes;
