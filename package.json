@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env rimraf ./src/.umi && cross-env UMI_ENV=dev umi dev  ",
-    "build": "cross-env umi build ",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider  umi build ",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
@@ -20,9 +20,11 @@
     ]
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.1",
     "@ant-design/pro-layout": "^6.32.3",
     "@three-ts/orbit-controls": "^1.4.7",
     "@tweenjs/tween.js": "^18.6.4",
+    "@umijs/route-utils": "^4.0.1",
     "ahooks": "^3.1.9",
     "antd": "^4.18.5",
     "cross-env": "^7.0.3",
